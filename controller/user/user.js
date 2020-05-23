@@ -65,19 +65,10 @@ const signinUser=(req,res,err)=>{
         };
 
         // Sign token
-        jwt.sign(
-          payload,
-          config.access_token,
-          {
-            expiresIn: 31556926 // 1 year in seconds
-          },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
-          }
-        );
+        const token=jwt.sign(payload,config.access_token);
+          res.header('auth-token',token).send(token);
+        
+     
       } else {
         return res
           .status(400)
